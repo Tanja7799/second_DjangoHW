@@ -1,0 +1,35 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Car List</h1>
+  <ul>
+    {% for car in cars %}
+      <li>
+        <a href="{% url 'car_detail' car.slug %}">
+          <strong>{{ car.make }} {{ car.model }}</strong>
+        </a>
+        <p>Power: {{ car.pover }} HP</p>
+        <p>{{ car.body|truncatewords:15 }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+  <div class="pagination">
+    {% if is_paginated %}
+      <span class="step-links">
+        {% if page.has_previous %}
+          <a href="?page=1">&laquo; first</a>
+          <a href="?page={{ page.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+          Page {{ page.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+          <a href="?page={{ page.next_page_number }}">next</a>
+          <a href="?page={{ page.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+      </span>
+    {% endif %}
+  </div>
+{% endblock %}
