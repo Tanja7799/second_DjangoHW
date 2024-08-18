@@ -5,12 +5,12 @@ from .models import Car
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def car_list(request):
-    cars = Car.objects.all()
+    cars = Car.objects.all().order_by('id')
     paginator = Paginator(cars, 5)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
 
-    return render(request, 'car_project/car/car_list.html',{'cars': cars,'page': page})
+    return render(request, 'car_project/car/car_list.html', {'cars': page, 'page': page})
 
 
 def car_detail(request, slug):
