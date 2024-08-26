@@ -1,0 +1,18 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <title>Список коментарів</title>
+
+    <h1>Список коментарів</h1>
+    <ul>
+        {% for comment in comments %}
+            <li>
+                <strong>{{ comment.user.username }}:</strong> {{ comment.text }} <br>
+                <small>{{ comment.created_at }}</small>
+            </li>
+        {% empty %}
+            <li>Коментарів немає.</li>
+        {% endfor %}
+    </ul>
+
+{% endblock content %}
