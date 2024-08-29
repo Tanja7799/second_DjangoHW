@@ -5,22 +5,23 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Car, Profile, Comment
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, CommentForm
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm, CommentForm, CarForm
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 
-def car_list(request):
-    cars = Car.objects.all().order_by('id')
-    paginator = Paginator(cars, 5)
-    page_number = request.GET.get('page')
-    page = paginator.get_page(page_number)
 
-    return render(request, 'car_project/car/car_list.html', {'cars': page, 'page': page})
+class CarListView(ListView):
+    model = Car
+    template_name = 'car_project/car/car_list.html'
+    context_object_name = 'cars'
+    paginate_by = 5
+    ordering = ['id']
 
-
-def car_detail(request, slug):
-    car = get_object_or_404(Car, slug=slug)
-    return render(request, 'car_project/car/car_detail.html', {'car': car})
-
+class CarDetailView(DetailView):
+    model = Car
+    template_name = 'car_project/car/car_detail.html'
+    context_object_name = 'car'
 
 
 def register(request):
@@ -78,3 +79,24 @@ def add_comment(request):
 def comment_list(request):
     comments = Comment.objects.all().order_by('-created_at')  # Отримання всіх коментарів, відсортованих за датою
     return render(request, 'comment_list.html', {'comments': comments})
+
+
+class CarCreateView(CreateView):
+    model = Car
+    template_name = 'car_project/car/car_form.html'
+    form_class = CarForm
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user  #привязка користувача до пропозиції
+        return super().form_valid(form)
+
+
+class CarUpdateView(UpdateView):
+    model = Car
+    template_name = 'car_project/car/car_form.html'
+    fields = ['make', 'model', 'slug', 'country', 'body', 'power', 'fuel_type', 'is_available']
+
+class CarDeleteView(DeleteView):
+    model = Car
+    template_name = 'car_project/car/car_confirm_delete.html'
+    success_url = reverse_lazy('car_list')

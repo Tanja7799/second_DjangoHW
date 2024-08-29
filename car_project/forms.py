@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Profile, Comment
+from .models import Profile, Comment, Car
 from django.contrib.auth.forms import UserCreationForm
 
 class UserRegisterForm(UserCreationForm):
@@ -33,3 +33,9 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['text']
+
+class CarForm(forms.ModelForm):
+    class Meta:
+        model = Car
+        fields = ['make', 'model', 'country', 'slug', 'body', 'pover',
+                  'fuel_type', 'is_available', 'image', 'price']

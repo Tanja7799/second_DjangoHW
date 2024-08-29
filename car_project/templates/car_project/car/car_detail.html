@@ -1,11 +1,13 @@
+
 {% extends "base_generic.html" %}
 
 {% block content %}
   <h1>{{ car.make }} {{ car.model }}</h1>
-  <p><strong>Country:</strong> {{ car.country }}</p>
-  <p><strong>Power:</strong> {{ car.pover }} HP</p>
-  <p><strong>Fuel Type:</strong> {{ car.fuel_type }}</p>
-  <p><strong>Description:</strong> {{ car.body }}</p>
-  <p><strong>Available:</strong> {{ car.is_available|yesno:"Yes,No" }}</p>
+  <img src="{{ car.image.url }}" alt="{{ car.make }} {{ car.model }}" style="max-width: 100%; height: auto;">
+  <p>Price: {{ car.price }}</p>
+  <p>Country: {{ car.country }}</p>
+  <p>Body: {{ car.body }}</p>
+  <p>Power: {{ car.power }}</p>
+  <p>Fuel Type: {{ car.fuel_type }}</p>
+  <p>Available: {{ car.is_available }}</p>
 {% endblock %}
-
