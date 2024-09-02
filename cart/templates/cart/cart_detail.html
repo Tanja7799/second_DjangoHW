@@ -1,0 +1,21 @@
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>Ваш кошик</h1>
+  <ul>
+    {% for item in cart %}
+      <li>{{ item.car.make }} {{ item.car.model }} - {{ item.quantity }} x {{ item.price }}</li>
+    {% endfor %}
+  </ul>
+  <p>Загальна вартість: {{ cart.get_total_price|stringformat:"0.2f" }}</p>
+  <form action="{#% url 'cart:cart_remove' %}" method="post">
+    {{ cart_product_form.as_p }}
+    {% csrf_token %}
+    <input type="submit" value="Видалити" >
+  </form>
+  <a href="{#% url 'cart:cart_clear' %}"> Очистити кошик</a>
+  <a href="{#% url 'cart:cart_checkout' %}"> Оформити замовлення</a>
+
+
+{% endblock %}

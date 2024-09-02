@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 'car_project',
     'car_project.apps.CarProjectConfig',
+    'crispy_forms',
+    'cart',
+
 ]
 
 MIDDLEWARE = [
@@ -52,6 +55,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# Налаштування сесій
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Використовувати базу даних для зберігання сесій
+SESSION_COOKIE_NAME = 'sessionid'
+SESSION_COOKIE_AGE = 1209600  # Два тижні
+SESSION_SAVE_EVERY_REQUEST = True
 
 ROOT_URLCONF = 'car_dealership.urls'
 
@@ -136,3 +145,5 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'car_list'
 
 LOGIN_URL = 'login'
+
+CART_SESSION_ID = 'cart'

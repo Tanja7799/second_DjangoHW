@@ -15,25 +15,28 @@
         </a>
         <p>Power: {{ car.power }} HP</p>
         <p>{{ car.body|truncatewords:15 }}</p>
+          <p> Prise {{ car.prise }} $</p>
+          <a href="{% url 'cart_add' car.id %}" class="btn btn-success">Додати до кошику</a>
+          <a href="{% url 'cart_update' car.id 1 %}" class="btn btn-warning">Змінити кількість</a>
+          <a href="{% url 'cart_remove' car.id %}" class="btn btn-danger">Видалити з кошику</a>
       </li>
     {% endfor %}
   </ul>
-
-  <div class="pagination">
+<div class="pagination">
     <span class="step-links">
-      {% if cars.has_next %}
-  <a href="?page={{ cars.next_page_number }}">next</a>
-  <a href="?page={{ cars.paginator.num_pages }}">last &raquo;</a>
-{% endif %}
+        {% if cars.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ cars.previous_page_number }}">previous</a>
+        {% endif %}
 
-      <span class="current">
-        Page {{ cars.number }} of {{ cars.paginator.num_pages }}.
-      </span>
+        <span class="current">
+            Page {{ cars.number }} of {{ cars.paginator.num_pages }}.
+        </span>
 
-      {% if cars.has_next %}
-        <a href="?page={{ cars.next_page_number }}">next</a>
-        <a href="?page={{ cars.paginator.num_pages }}">last &raquo;</a>
-      {% endif %}
+        {% if cars.has_next %}
+            <a href="?page={{ cars.next_page_number }}">next</a>
+            <a href="?page={{ cars.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
     </span>
-  </div>
+</div>
 {% endblock %}
